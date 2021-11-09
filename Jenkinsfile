@@ -15,26 +15,6 @@ pipeline {
       }
     }
 
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
-
-    stage('Push Image') {
-      environment {
-               registryCredential = 'dockerhub'
-           }
-      steps{
-        script {
-          docker.withRegistry( "", registryCredential ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
 
     stage('Deploy App') {
       steps {
